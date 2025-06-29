@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class ContactSection extends StatelessWidget {
   const ContactSection({super.key});
@@ -40,6 +41,11 @@ class ContactSection extends StatelessWidget {
   }
 
   List<Widget> _buildContactContent(BuildContext context, bool isMobile) {
+    final formKey = GlobalKey<FormState>();
+    final nameController = TextEditingController();
+    final emailController = TextEditingController();
+    final messageController = TextEditingController();
+
     return [
       Expanded(
         flex: 1,
@@ -59,7 +65,7 @@ class ContactSection extends StatelessWidget {
               context,
               Icons.phone_outlined,
               'Call Us',
-              '+62 812-3456-7890', // Example Indonesian number
+              '+6281912308055',
               isMobile,
             ),
             SizedBox(height: isMobile ? 20 : 30),
@@ -76,53 +82,80 @@ class ContactSection extends StatelessWidget {
       SizedBox(width: isMobile ? 0 : 60, height: isMobile ? 40 : 0),
       Expanded(
         flex: 2,
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              'Send us a message:',
-              style: GoogleFonts.montserrat(
-                fontSize: isMobile ? 20 : 24,
-                fontWeight: FontWeight.w600,
-                color: Colors.blueGrey[800],
+        child: Form(
+          key: formKey,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                'Send us a message:',
+                style: GoogleFonts.montserrat(
+                  fontSize: isMobile ? 20 : 24,
+                  fontWeight: FontWeight.w600,
+                  color: Colors.blueGrey[800],
+                ),
+                textAlign: isMobile ? TextAlign.center : TextAlign.left,
               ),
-              textAlign: isMobile ? TextAlign.center : TextAlign.left,
-            ),
-            SizedBox(height: isMobile ? 20 : 25),
-            TextFormField(
-              decoration:
-                  _inputDecoration(context, 'Your Name', Icons.person_outline),
-              style: GoogleFonts.openSans(),
-            ),
-            SizedBox(height: isMobile ? 15 : 20),
-            TextFormField(
-              decoration:
-                  _inputDecoration(context, 'Your Email', Icons.email_outlined),
-              keyboardType: TextInputType.emailAddress,
-              style: GoogleFonts.openSans(),
-            ),
-            SizedBox(height: isMobile ? 15 : 20),
-            TextFormField(
-              maxLines: 6,
-              decoration: _inputDecoration(
-                  context, 'Your Message', Icons.message_outlined),
-              style: GoogleFonts.openSans(),
-            ),
-            SizedBox(height: isMobile ? 20 : 30),
-            Center(
-              // Center the button on mobile
-              child: ElevatedButton.icon(
-                onPressed: () {
-                  // Implement form submission logic here
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(content: Text('Message sent! Thank you.')),
-                  );
-                },
-                icon: const Icon(Icons.send),
-                label: const Text('Send Message'),
+              SizedBox(height: isMobile ? 20 : 25),
+              TextFormField(
+                controller: nameController,
+                decoration: _inputDecoration(
+                    context, 'Your Name', Icons.person_outline),
+                style: GoogleFonts.openSans(),
+                validator: (value) =>
+                    value == null || value.isEmpty ? 'Enter your name' : null,
               ),
-            ),
-          ],
+              SizedBox(height: isMobile ? 15 : 20),
+              TextFormField(
+                controller: emailController,
+                decoration: _inputDecoration(
+                    context, 'Your Email', Icons.email_outlined),
+                keyboardType: TextInputType.emailAddress,
+                style: GoogleFonts.openSans(),
+                validator: (value) =>
+                    value == null || value.isEmpty ? 'Enter your email' : null,
+              ),
+              SizedBox(height: isMobile ? 15 : 20),
+              TextFormField(
+                controller: messageController,
+                maxLines: 6,
+                decoration: _inputDecoration(
+                    context, 'Your Message', Icons.message_outlined),
+                style: GoogleFonts.openSans(),
+                validator: (value) => value == null || value.isEmpty
+                    ? 'Enter your message'
+                    : null,
+              ),
+              SizedBox(height: isMobile ? 20 : 30),
+              Center(
+                child: ElevatedButton.icon(
+                  onPressed: () async {
+                    if (formKey.currentState!.validate()) {
+                      final name = nameController.text;
+                      final email = emailController.text;
+                      final message = messageController.text;
+                      final whatsappNumber = '+6281912308055';
+                      final text = Uri.encodeComponent(
+                          'Hello, my name is $name ($email).\n$message');
+                      final url =
+                          'https://wa.me/${whatsappNumber.replaceAll('+', '')}?text=$text';
+                      if (await canLaunchUrl(Uri.parse(url))) {
+                        await launchUrl(Uri.parse(url),
+                            mode: LaunchMode.externalApplication);
+                      } else {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          const SnackBar(
+                              content: Text('Could not open WhatsApp.')),
+                        );
+                      }
+                    }
+                  },
+                  icon: const Icon(Icons.send),
+                  label: const Text('Send via WhatsApp'),
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     ];
@@ -139,7 +172,6 @@ class ContactSection extends StatelessWidget {
             size: isMobile ? 28 : 32, color: Theme.of(context).primaryColor),
         SizedBox(width: isMobile ? 10 : 20),
         Flexible(
-          // Use Flexible to prevent overflow on small screens
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -158,7 +190,7 @@ class ContactSection extends StatelessWidget {
                   fontSize: isMobile ? 15 : 16,
                   color: Colors.grey[700],
                 ),
-                softWrap: true, // Allow text to wrap
+                softWrap: true,
               ),
             ],
           ),
@@ -173,8 +205,7 @@ class ContactSection extends StatelessWidget {
       labelText: label,
       hintStyle: GoogleFonts.openSans(color: Colors.grey[500]),
       labelStyle: GoogleFonts.openSans(color: Colors.grey[700]),
-      prefixIcon: Icon(icon,
-          color: Theme.of(context).hintColor), // Use accent color for icons
+      prefixIcon: Icon(icon, color: Theme.of(context).hintColor),
       border: OutlineInputBorder(
         borderRadius: BorderRadius.circular(8),
         borderSide: BorderSide(color: Colors.grey[300]!),

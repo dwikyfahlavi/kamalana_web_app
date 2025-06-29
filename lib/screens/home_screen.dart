@@ -73,12 +73,12 @@ class _HomeScreenState extends State<HomeScreen>
       floatingActionButton: FloatingActionButton(
         backgroundColor: const Color(0xFF25D366),
         onPressed: () {
-          final Uri whatsappUrl = Uri.parse(
-              'https://wa.me/6285155325399'); // 62 is Indonesia country code
+          final Uri whatsappUrl =
+              Uri.parse('https://wa.me/e'); // 62 is Indonesia country code
           // ignore: deprecated_member_use
           launchUrl(whatsappUrl, mode: LaunchMode.externalApplication);
         },
-        child: Icon(Icons.chat, color: Colors.white, size: 32),
+        child: Icon(Icons.phone, color: Colors.white, size: 32),
       ),
       endDrawer: isMobile ? _buildDrawer(context) : null, // Drawer for mobile
       extendBodyBehindAppBar: true,

@@ -8,14 +8,14 @@ class PortfolioSection extends StatelessWidget {
     {
       'title': 'Harmony House',
       'image':
-          'https://images.unsplash.com/photo-1600585154340-dacd98e265c8?q=80&w=2940&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+          'https://images.unsplash.com/photo-1512917774080-9991f1c4c750?q=80&w=2940&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
       'description':
           'A minimalist residence designed for tranquility and modern living, featuring sustainable materials.'
     },
     {
       'title': 'Eco Tower',
       'image':
-          'https://images.unsplash.com/photo-1497215729119-ed229e3a7587?q=80&w=2940&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+          'https://images.unsplash.com/photo-1512917774080-9991f1c4c750?q=80&w=2940&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
       'description':
           'An innovative commercial complex integrating green spaces and energy-efficient systems.'
     },
@@ -29,21 +29,21 @@ class PortfolioSection extends StatelessWidget {
     {
       'title': 'Urban Core',
       'image':
-          'https://images.unsplash.com/photo-1516246417765-5b4d457636e0?q=80&w=2940&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+          'https://images.unsplash.com/photo-1512917774080-9991f1c4c750?q=80&w=2940&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
       'description':
           'Revitalizing a city block with mixed-use development, fostering community and commerce.'
     },
     {
       'title': 'Zen Garden House',
       'image':
-          'https://images.unsplash.com/photo-1506126613408-eca69fe87852?q=80&w=2940&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+          'https://images.unsplash.com/photo-1512917774080-9991f1c4c750?q=80&w=2940&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
       'description':
           'A serene home designed around a central Japanese Zen garden, promoting peace and reflection.'
     },
     {
       'title': 'Industrial Chic Loft',
       'image':
-          'https://images.unsplash.com/photo-1541571216-3e4b78631100?q=80&w=2940&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+          'https://images.unsplash.com/photo-1512917774080-9991f1c4c750?q=80&w=2940&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
       'description':
           'Conversion of an old factory into a modern, stylish living and workspace.'
     },
@@ -54,11 +54,11 @@ class PortfolioSection extends StatelessWidget {
     final double screenWidth = MediaQuery.of(context).size.width;
     final bool isMobile = screenWidth < 768;
     final double padding = isMobile ? 20 : 60;
-    final int crossAxisCount = isMobile ? 1 : (screenWidth < 1024 ? 2 : 3);
+    final double cardWidth = isMobile ? screenWidth * 0.8 : 380;
 
     return Container(
       padding: EdgeInsets.all(padding),
-      color: Theme.of(context).scaffoldBackgroundColor, // Light grey
+      color: Theme.of(context).scaffoldBackgroundColor,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -68,24 +68,23 @@ class PortfolioSection extends StatelessWidget {
               fontSize: isMobile ? 28 : 38,
               fontWeight: FontWeight.bold,
               color: Theme.of(context).primaryColor,
+              letterSpacing: 1.2,
             ),
           ),
-          const SizedBox(height: 40),
-          GridView.builder(
-            shrinkWrap: true,
-            physics: const NeverScrollableScrollPhysics(),
-            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-              crossAxisCount: crossAxisCount,
-              childAspectRatio: isMobile
-                  ? (3 / 2.5)
-                  : (3 / 2), // Adjust aspect ratio for mobile
-              crossAxisSpacing: isMobile ? 15 : 30,
-              mainAxisSpacing: isMobile ? 15 : 30,
+          const SizedBox(height: 32),
+          SizedBox(
+            height: isMobile ? 340 : 800,
+            child: ListView.separated(
+              scrollDirection: Axis.horizontal,
+              itemCount: projects.length,
+              separatorBuilder: (_, __) => SizedBox(width: isMobile ? 16 : 32),
+              itemBuilder: (context, index) {
+                return SizedBox(
+                  width: cardWidth,
+                  child: PortfolioCard(project: projects[index]),
+                );
+              },
             ),
-            itemCount: projects.length,
-            itemBuilder: (context, index) {
-              return PortfolioCard(project: projects[index]);
-            },
           ),
         ],
       ),
@@ -111,9 +110,11 @@ class _PortfolioCardState extends State<PortfolioCard>
     super.initState();
     _controller = AnimationController(
       vsync: this,
-      duration: const Duration(milliseconds: 200),
+      duration: const Duration(milliseconds: 180),
     );
-    _scaleAnimation = Tween<double>(begin: 1.0, end: 1.05).animate(_controller);
+    _scaleAnimation = Tween<double>(begin: 1.0, end: 1.04).animate(
+      CurvedAnimation(parent: _controller, curve: Curves.easeOut),
+    );
   }
 
   @override
@@ -122,63 +123,205 @@ class _PortfolioCardState extends State<PortfolioCard>
     super.dispose();
   }
 
+  void _onTapDown(_) => _controller.forward();
+  void _onTapUp(_) => _controller.reverse();
+
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
     return MouseRegion(
-      // For hover effect on web
       onEnter: (_) => _controller.forward(),
       onExit: (_) => _controller.reverse(),
-      child: ScaleTransition(
-        scale: _scaleAnimation,
-        child: Card(
-          elevation: 8,
-          shape:
-              RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
-          clipBehavior: Clip.antiAlias, // Ensures image respects border radius
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Expanded(
-                flex: 3,
-                child: Image.network(
-                  widget.project['image']!,
-                  width: double.infinity,
-                  fit: BoxFit.cover,
+      child: GestureDetector(
+        onTap: () {
+          showDialogProjectDetails(context);
+        },
+        child: ScaleTransition(
+          scale: _scaleAnimation,
+          child: Card(
+            elevation: 14,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(22),
+            ),
+            clipBehavior: Clip.antiAlias,
+            color: theme.brightness == Brightness.dark
+                ? Colors.grey[900]
+                : Colors.white,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                // Image with overlay and rounded corners (portrait aspect ratio)
+                Stack(
+                  children: [
+                    AspectRatio(
+                      aspectRatio: 3 / 4, // Portrait aspect ratio
+                      child: Image.network(
+                        widget.project['image']!,
+                        fit: BoxFit.cover,
+                        loadingBuilder: (context, child, progress) =>
+                            progress == null
+                                ? child
+                                : Container(
+                                    color: Colors.grey[200],
+                                    child: const Center(
+                                        child: CircularProgressIndicator()),
+                                  ),
+                      ),
+                    ),
+                    Positioned(
+                      right: 16,
+                      top: 16,
+                      child: Container(
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 12, vertical: 6),
+                        decoration: BoxDecoration(
+                          color: Colors.black.withOpacity(0.5),
+                          borderRadius: BorderRadius.circular(12),
+                        ),
+                        child: const Icon(Icons.visibility,
+                            color: Colors.white, size: 20),
+                      ),
+                    ),
+                  ],
                 ),
-              ),
-              Expanded(
-                flex: 2,
-                child: Padding(
-                  padding: const EdgeInsets.all(15),
+                // Card content
+                Padding(
+                  padding: const EdgeInsets.fromLTRB(20, 18, 20, 18),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
                         widget.project['title']!,
                         style: GoogleFonts.montserrat(
-                          fontSize: 20,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.blueGrey[800],
+                          fontSize: 22,
+                          fontWeight: FontWeight.w700,
+                          color: theme.primaryColorDark,
+                          letterSpacing: 0.5,
                         ),
                       ),
-                      const SizedBox(height: 8),
+                      const SizedBox(height: 10),
                       Text(
                         widget.project['description']!,
                         style: GoogleFonts.openSans(
-                          fontSize: 14,
-                          color: Colors.grey[700],
+                          fontSize: 15,
+                          color: theme.brightness == Brightness.dark
+                              ? Colors.grey[300]
+                              : Colors.grey[700],
+                          height: 1.5,
                         ),
                         maxLines: 3,
                         overflow: TextOverflow.ellipsis,
+                      ),
+                      const SizedBox(height: 16),
+                      Row(
+                        children: [
+                          TextButton.icon(
+                            style: TextButton.styleFrom(
+                              foregroundColor: theme.primaryColor,
+                              textStyle: GoogleFonts.montserrat(
+                                fontWeight: FontWeight.w600,
+                              ),
+                            ),
+                            onPressed: () {
+                              showDialogProjectDetails(context);
+                            },
+                            icon:
+                                const Icon(Icons.open_in_new_rounded, size: 18),
+                            label: const Text('View Project'),
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+
+  showDialogProjectDetails(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (context) {
+        return Dialog(
+          backgroundColor: Colors.transparent,
+          insetPadding: const EdgeInsets.all(32),
+          child: Stack(
+            alignment: Alignment.center,
+            children: [
+              // Image
+              ClipRRect(
+                borderRadius: BorderRadius.circular(18),
+                child: Image.network(
+                  widget.project['image']!,
+                  fit: BoxFit.cover,
+                  // height: 700,
+                  // width: 900,
+                  loadingBuilder: (context, child, progress) => progress == null
+                      ? child
+                      : Container(
+                          color: Colors.grey[200],
+                          // height: 700,
+                          // width: 900,
+                          child:
+                              const Center(child: CircularProgressIndicator()),
+                        ),
+                ),
+              ),
+              // Description overlay
+              Positioned(
+                left: 0,
+                right: 0,
+                bottom: 0,
+                child: Container(
+                  // width: 900,
+                  padding: const EdgeInsets.all(28),
+                  decoration: BoxDecoration(
+                    color: Colors.black.withOpacity(0.7),
+                    borderRadius: const BorderRadius.vertical(
+                      bottom: Radius.circular(18),
+                    ),
+                  ),
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        widget.project['title']!,
+                        style: GoogleFonts.montserrat(
+                          color: Colors.white,
+                          fontSize: 26,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      const SizedBox(height: 12),
+                      Text(
+                        widget.project['description']!,
+                        style: GoogleFonts.openSans(
+                          color: Colors.white70,
+                          fontSize: 17,
+                        ),
                       ),
                     ],
                   ),
                 ),
               ),
+              // Close button
+              Positioned(
+                top: 16,
+                right: 16,
+                child: IconButton(
+                  icon: const Icon(Icons.close, color: Colors.white, size: 28),
+                  onPressed: () => Navigator.of(context).pop(),
+                ),
+              ),
             ],
           ),
-        ),
-      ),
+        );
+      },
     );
   }
 }
