@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:kamalana_web_app/widgets/about_me_section.dart';
 import 'package:kamalana_web_app/widgets/contact_section.dart';
+import 'package:kamalana_web_app/widgets/package_sectiion.dart';
 import 'package:kamalana_web_app/widgets/portfolio_section.dart'; // If using Google Fonts
 import 'package:url_launcher/url_launcher.dart';
 
@@ -18,6 +19,7 @@ class _HomeScreenState extends State<HomeScreen>
     with SingleTickerProviderStateMixin {
   final GlobalKey _aboutMeKey = GlobalKey();
   final GlobalKey _portfolioKey = GlobalKey();
+  final GlobalKey _offeringKey = GlobalKey();
   final GlobalKey _contactKey = GlobalKey();
 
   late AnimationController _heroAnimationController;
@@ -96,7 +98,7 @@ class _HomeScreenState extends State<HomeScreen>
               title: Container(
                 margin: EdgeInsets.only(top: isMobile ? 8 : 16),
                 child: Image.asset(
-                  'assets/images/logo.png',
+                  'assets/images/locfghnmgo.png',
                   height: isMobile ? 80 : 100, // Responsive logo size
                 ),
               ),
@@ -107,6 +109,8 @@ class _HomeScreenState extends State<HomeScreen>
                           'About Me', () => _scrollToSection(_aboutMeKey)),
                       _buildAppBarButton(
                           'Portfolio', () => _scrollToSection(_portfolioKey)),
+                      _buildAppBarButton(
+                          'Offerings', () => _scrollToSection(_offeringKey)),
                       _buildAppBarButton(
                           'Contact', () => _scrollToSection(_contactKey)),
                       const SizedBox(width: 24),
@@ -163,6 +167,8 @@ class _HomeScreenState extends State<HomeScreen>
             ),
             AboutMeSection(key: _aboutMeKey),
             PortfolioSection(key: _portfolioKey),
+            OfferingsSection(
+                key: _offeringKey), // Assuming you have this widget
             ContactSection(key: _contactKey),
             // Footer
             Container(
