@@ -6,78 +6,78 @@ class PortfolioSection extends StatelessWidget {
 
   final List<Map<String, String>> projects = const [
     {
-      'title': 'Harmony manis',
-      'image':
-          'https://images.unsplash.com/photo-1512917774080-9991f1c4c750?q=80&w=2940&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+      'title': "L'Orangerie ",
+      'image': 'assets/images/cafe.png',
       'description':
-          'A minimalist residence designed for tranquility and modern living, featuring sustainable materials.'
+          'With few walls and abundant light, this café-restaurant offers a sense of openness—like a garden without fences, where conversations and flavors grow without boundaries.'
     },
     {
-      'title': 'Eco ghdfghj',
-      'image':
-          'https://images.unsplash.com/photo-1512917774080-9991f1c4c750?q=80&w=2940&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+      'title': 'AwVilla',
+      'image': 'assets/images/AwVilla.png',
       'description':
-          'An innovative commercial complex integrating green spaces and energy-efficient systems.'
+          'Bathed in white serenity, this villa stands as a quiet poem of elegance. Inspired by classical American architecture, its graceful entrance and soft grandeur speak not in volume, but in presence. A garden blooms gently at its heart and whispers around its edges—inviting nature to dance with luxury, in stillness and in light.'
     },
     {
-      'title': 'Riverside Retreat',
-      'image':
-          'https://images.unsplash.com/photo-1512917774080-9991f1c4c750?q=80&w=2940&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+      'title': 'Panogi Cafe',
+      'image': 'assets/images/panogicafe.png',
       'description':
-          'A luxurious vacation home blending seamlessly with its natural riverside environment.'
+          'Panogi is more than a building — it is a contemporary social node that reflects the evolving dynamics of urban living in Medan'
     },
     {
-      'title': 'Urban Core',
-      'image':
-          'https://images.unsplash.com/photo-1512917774080-9991f1c4c750?q=80&w=2940&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+      'title': 'Makeupuccino Bengawan',
+      'image': 'assets/images/makeupuccinobengawan.png',
       'description':
-          'Revitalizing a city block with mixed-use development, fostering community and commerce.'
+          'Makeupuccino is a well-known beauty store among women in Bandung & Bogor, offering a wide range of makeup products, skincare essentials, and beauty accessories.'
     },
     {
-      'title': 'Zen Garden House',
-      'image':
-          'https://images.unsplash.com/photo-1512917774080-9991f1c4c750?q=80&w=2940&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+      'title': 'Makeupuccino Bogor',
+      'image': 'assets/images/makeupuccinobogor.png',
       'description':
-          'A serene home designed around a central Japanese Zen garden, promoting peace and reflection.'
+          'Makeupuccino was born and blossomed. Now, it nurtures a new space in the city of rain—a special place for the women of Bogor to celebrate their beauty, in softness and in meaning.'
     },
     {
-      'title': 'Industrial Chic Loft',
-      'image':
-          'https://images.unsplash.com/photo-1512917774080-9991f1c4c750?q=80&w=2940&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+      'title': 'Merakee Florist',
+      'image': 'assets/images/merakee.png',
       'description':
-          'Conversion of an old factory into a modern, stylish living and workspace.'
+          'Merakee Florist isn’t just a flower shop—it’s a space where love, joy, and milestones are celebrated. Now with a fresh new look, designed by Kamalana'
+    },
+    {
+      'title': 'Lansdcape Kilang Pertamina',
+      'image': 'assets/images/UTARA (1).png',
+      'description':
+          'Merakee Florist isn’t just a flower shop—it’s a space where love, joy, and milestones are celebrated. Now with a fresh new look, designed by Kamalana'
     },
   ];
 
   @override
   Widget build(BuildContext context) {
     final double screenWidth = MediaQuery.of(context).size.width;
-    final bool isMobile = screenWidth < 768;
-    final double padding = isMobile ? 20 : 60;
-    final double cardWidth = isMobile ? screenWidth * 0.8 : 380;
+    final bool isMobile = screenWidth < 1600;
+    final double padding = isMobile ? 35 : 70;
+    final double cardWidth = isMobile ? screenWidth * 0.7 : 380;
 
     return Container(
       padding: EdgeInsets.all(padding),
-      color: Theme.of(context).scaffoldBackgroundColor,
+      color: Colors.white,
       child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           Text(
-            'Our Portfolio',
-            style: GoogleFonts.montserrat(
-              fontSize: isMobile ? 28 : 38,
-              fontWeight: FontWeight.bold,
+            '     HIGHLIGHTS PROJECTS    ',
+            style: GoogleFonts.ysabeauInfant(
+              fontSize: isMobile ? 20 : 40,
+              fontWeight: FontWeight.w600,
               color: Theme.of(context).primaryColor,
-              letterSpacing: 1.2,
+              letterSpacing: 3.0,
             ),
           ),
-          const SizedBox(height: 32),
+          const SizedBox(height: 40),
           SizedBox(
-            height: isMobile ? 340 : 800,
+            height: isMobile ? 350 : 700,
             child: ListView.separated(
               scrollDirection: Axis.horizontal,
               itemCount: projects.length,
-              separatorBuilder: (_, __) => SizedBox(width: isMobile ? 16 : 32),
+              separatorBuilder: (_, __) => SizedBox(width: isMobile ? 20 : 20),
               itemBuilder: (context, index) {
                 return SizedBox(
                   width: cardWidth,
@@ -110,10 +110,11 @@ class _PortfolioCardState extends State<PortfolioCard>
     super.initState();
     _controller = AnimationController(
       vsync: this,
-      duration: const Duration(milliseconds: 180),
+      duration: const Duration(milliseconds: 500),
     );
-    _scaleAnimation = Tween<double>(begin: 1.0, end: 1.04).animate(
-      CurvedAnimation(parent: _controller, curve: Curves.easeOut),
+    _scaleAnimation = Tween<double>(begin: 0.98, end: 1.02).animate(
+      CurvedAnimation(
+          parent: _controller, curve: Curves.fastEaseInToSlowEaseOut),
     );
   }
 
@@ -123,7 +124,7 @@ class _PortfolioCardState extends State<PortfolioCard>
     super.dispose();
   }
 
-  void _onTapDown(_) => _controller.forward();
+  void _onTapDown(dynamic) => _controller.forward();
   void _onTapUp(_) => _controller.reverse();
 
   @override
@@ -139,13 +140,13 @@ class _PortfolioCardState extends State<PortfolioCard>
         child: ScaleTransition(
           scale: _scaleAnimation,
           child: Card(
-            elevation: 14,
+            elevation: 1000,
             shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(22),
+              borderRadius: BorderRadius.circular(25),
             ),
             clipBehavior: Clip.antiAlias,
             color: theme.brightness == Brightness.dark
-                ? Colors.grey[900]
+                ? const Color.fromARGB(255, 255, 255, 255)
                 : Colors.white,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -162,24 +163,25 @@ class _PortfolioCardState extends State<PortfolioCard>
                             progress == null
                                 ? child
                                 : Container(
-                                    color: Colors.grey[200],
+                                    color: const Color.fromARGB(255, 0, 0, 0),
                                     child: const Center(
                                         child: CircularProgressIndicator()),
                                   ),
                       ),
                     ),
                     Positioned(
-                      right: 16,
-                      top: 16,
+                      right: 20,
+                      top: 250,
                       child: Container(
                         padding: const EdgeInsets.symmetric(
-                            horizontal: 12, vertical: 6),
+                            horizontal: 6, vertical: 6),
                         decoration: BoxDecoration(
-                          color: Colors.black.withOpacity(0.5),
-                          borderRadius: BorderRadius.circular(12),
+                          color: const Color.fromARGB(255, 255, 255, 255)
+                              .withOpacity(0.2),
+                          borderRadius: BorderRadius.circular(20),
                         ),
-                        child: const Icon(Icons.visibility,
-                            color: Colors.white, size: 20),
+                        child: const Icon(Icons.arrow_forward_ios_outlined,
+                            color: Colors.white, size: 15),
                       ),
                     ),
                   ],
@@ -192,7 +194,7 @@ class _PortfolioCardState extends State<PortfolioCard>
                     children: [
                       Text(
                         widget.project['title']!,
-                        style: GoogleFonts.montserrat(
+                        style: GoogleFonts.ysabeau(
                           fontSize: 22,
                           fontWeight: FontWeight.w700,
                           color: theme.primaryColorDark,
@@ -202,11 +204,11 @@ class _PortfolioCardState extends State<PortfolioCard>
                       const SizedBox(height: 10),
                       Text(
                         widget.project['description']!,
-                        style: GoogleFonts.openSans(
+                        style: GoogleFonts.ysabeau(
                           fontSize: 15,
                           color: theme.brightness == Brightness.dark
                               ? Colors.grey[300]
-                              : Colors.grey[700],
+                              : const Color.fromARGB(255, 0, 0, 0),
                           height: 1.5,
                         ),
                         maxLines: 3,
@@ -218,16 +220,16 @@ class _PortfolioCardState extends State<PortfolioCard>
                           TextButton.icon(
                             style: TextButton.styleFrom(
                               foregroundColor: theme.primaryColor,
-                              textStyle: GoogleFonts.montserrat(
-                                fontWeight: FontWeight.w600,
+                              textStyle: GoogleFonts.ysabeau(
+                                fontWeight: FontWeight.w200,
                               ),
                             ),
                             onPressed: () {
                               showDialogProjectDetails(context);
                             },
-                            icon:
-                                const Icon(Icons.open_in_new_rounded, size: 18),
-                            label: const Text('View Project'),
+                            icon: const Icon(Icons.open_in_full_rounded,
+                                size: 20),
+                            label: const Text('See Project'),
                           ),
                         ],
                       ),
@@ -254,7 +256,7 @@ class _PortfolioCardState extends State<PortfolioCard>
             children: [
               // Image
               ClipRRect(
-                borderRadius: BorderRadius.circular(18),
+                borderRadius: BorderRadius.circular(60),
                 child: Image.network(
                   widget.project['image']!,
                   fit: BoxFit.cover,
@@ -263,7 +265,7 @@ class _PortfolioCardState extends State<PortfolioCard>
                   loadingBuilder: (context, child, progress) => progress == null
                       ? child
                       : Container(
-                          color: Colors.grey[200],
+                          color: const Color.fromARGB(255, 255, 255, 255),
                           // height: 700,
                           // width: 900,
                           child:
@@ -291,19 +293,20 @@ class _PortfolioCardState extends State<PortfolioCard>
                     children: [
                       Text(
                         widget.project['title']!,
-                        style: GoogleFonts.montserrat(
+                        style: GoogleFonts.ysabeau(
                           color: Colors.white,
-                          fontSize: 26,
-                          fontWeight: FontWeight.bold,
+                          fontSize: 40,
+                          fontWeight: FontWeight.w300,
                         ),
                       ),
-                      const SizedBox(height: 12),
+                      const SizedBox(height: 10),
                       Text(
                         widget.project['description']!,
-                        style: GoogleFonts.openSans(
-                          color: Colors.white70,
-                          fontSize: 17,
-                        ),
+                        style: GoogleFonts.ysabeau(
+                            color: Colors.white70,
+                            fontWeight: FontWeight.w100,
+                            fontSize: 15,
+                            wordSpacing: 1.0),
                       ),
                     ],
                   ),
@@ -312,9 +315,10 @@ class _PortfolioCardState extends State<PortfolioCard>
               // Close button
               Positioned(
                 top: 16,
-                right: 16,
+                right: 20,
                 child: IconButton(
-                  icon: const Icon(Icons.close, color: Colors.white, size: 28),
+                  icon: const Icon(Icons.close,
+                      color: Color.fromARGB(255, 160, 160, 160), size: 28),
                   onPressed: () => Navigator.of(context).pop(),
                 ),
               ),

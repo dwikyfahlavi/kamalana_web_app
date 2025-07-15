@@ -9,23 +9,23 @@ class ContactSection extends StatelessWidget {
   Widget build(BuildContext context) {
     final double screenWidth = MediaQuery.of(context).size.width;
     final bool isMobile = screenWidth < 768;
-    final double padding = isMobile ? 20 : 60;
+    final double padding = isMobile ? 20 : 80;
 
     return Container(
       padding: EdgeInsets.all(padding),
-      color: Colors.white,
+      color: const Color(0xFF023131), // Deep indigo color
       child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           Text(
-            'Get in Touch',
-            style: GoogleFonts.montserrat(
+            '•   GET IN TOUCH  •',
+            style: GoogleFonts.ysabeauInfant(
               fontSize: isMobile ? 28 : 38,
               fontWeight: FontWeight.bold,
-              color: Theme.of(context).primaryColor,
+              color: Colors.white,
             ),
           ),
-          const SizedBox(height: 40),
+          const SizedBox(height: 120),
           isMobile
               ? Column(
                   crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -48,51 +48,80 @@ class ContactSection extends StatelessWidget {
 
     return [
       Expanded(
-        flex: 1,
+        flex: 2,
         child: Column(
           crossAxisAlignment:
               isMobile ? CrossAxisAlignment.center : CrossAxisAlignment.start,
           children: [
-            _buildContactInfo(
-              context,
-              Icons.email_outlined,
-              'Email Us',
-              'hello@architectstudio.com',
-              isMobile,
+            GestureDetector(
+              onTap: () async {
+                final Uri emailUri = Uri(
+                  scheme: 'mailto',
+                  path: 'kamalana.atelier@gmail.com',
+                );
+                if (await canLaunchUrl(emailUri)) {
+                  await launchUrl(emailUri,
+                      mode: LaunchMode.externalApplication);
+                }
+              },
+              child: _buildContactInfo(
+                context,
+                Icons.email_rounded,
+                'Email Us',
+                'kamalana.atelier@gmail.com',
+                isMobile,
+              ),
             ),
             SizedBox(height: isMobile ? 20 : 30),
-            _buildContactInfo(
-              context,
-              Icons.phone_outlined,
-              'Call Us',
-              '+6281912308055',
-              isMobile,
+            GestureDetector(
+              onTap: () async {
+                final Uri whatsappUrl = Uri.parse(
+                    'https://wa.me/+6281912308055'); // 62 is Indonesia country code
+                // ignore: deprecated_member_use
+                launchUrl(whatsappUrl, mode: LaunchMode.externalApplication);
+              },
+              child: _buildContactInfo(
+                context,
+                Icons.call_rounded,
+                'Call Us',
+                '+62 819 - 1230 - 8055',
+                isMobile,
+              ),
             ),
             SizedBox(height: isMobile ? 20 : 30),
-            _buildContactInfo(
-              context,
-              Icons.location_on_outlined,
-              'Visit Our Studio',
-              'Jl. Arsitek No. 123, Bandung, West Java, Indonesia',
-              isMobile,
+            GestureDetector(
+              onTap: () async {
+                const url = 'https://instagram.com/kamalana.atelier';
+                if (await canLaunchUrl(Uri.parse(url))) {
+                  await launchUrl(Uri.parse(url),
+                      mode: LaunchMode.externalApplication);
+                }
+              },
+              child: _buildContactInfo(
+                context,
+                Icons.camera,
+                'Instagram',
+                'kamalana.atelier',
+                isMobile,
+              ),
             ),
           ],
         ),
       ),
-      SizedBox(width: isMobile ? 0 : 60, height: isMobile ? 40 : 0),
+      SizedBox(width: isMobile ? 20 : 80, height: isMobile ? 60 : 20),
       Expanded(
-        flex: 2,
+        flex: 3,
         child: Form(
           key: formKey,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                'Send us a message:',
-                style: GoogleFonts.montserrat(
-                  fontSize: isMobile ? 20 : 24,
-                  fontWeight: FontWeight.w600,
-                  color: Colors.blueGrey[800],
+                'We’re Here to Listen:',
+                style: GoogleFonts.ysabeau(
+                  fontSize: isMobile ? 20 : 30,
+                  fontWeight: FontWeight.w400,
+                  color: const Color.fromARGB(255, 255, 255, 255),
                 ),
                 textAlign: isMobile ? TextAlign.center : TextAlign.left,
               ),
@@ -100,28 +129,26 @@ class ContactSection extends StatelessWidget {
               TextFormField(
                 controller: nameController,
                 decoration: _inputDecoration(
-                    context, 'Your Name', Icons.person_outline),
-                style: GoogleFonts.openSans(),
+                    context, 'Your Name', Icons.person_2_rounded),
+                style: GoogleFonts.ysabeauInfant(),
                 validator: (value) =>
                     value == null || value.isEmpty ? 'Enter your name' : null,
               ),
-              SizedBox(height: isMobile ? 15 : 20),
+              SizedBox(height: isMobile ? 20 : 20),
               TextFormField(
                 controller: emailController,
                 decoration: _inputDecoration(
-                    context, 'Your Email', Icons.email_outlined),
+                    context, 'Your Email (Optional)', Icons.email_rounded),
                 keyboardType: TextInputType.emailAddress,
-                style: GoogleFonts.openSans(),
-                validator: (value) =>
-                    value == null || value.isEmpty ? 'Enter your email' : null,
+                style: GoogleFonts.ysabeauInfant(),
               ),
-              SizedBox(height: isMobile ? 15 : 20),
+              SizedBox(height: isMobile ? 20 : 20),
               TextFormField(
                 controller: messageController,
                 maxLines: 6,
                 decoration: _inputDecoration(
-                    context, 'Your Message', Icons.message_outlined),
-                style: GoogleFonts.openSans(),
+                    context, 'Your Message', Icons.message_rounded),
+                style: GoogleFonts.ysabeauInfant(),
                 validator: (value) => value == null || value.isEmpty
                     ? 'Enter your message'
                     : null,
@@ -136,7 +163,7 @@ class ContactSection extends StatelessWidget {
                       final message = messageController.text;
                       final whatsappNumber = '+6281912308055';
                       final text = Uri.encodeComponent(
-                          'Hello, my name is $name ($email).\n$message');
+                          'Hi Kamalana, saya $name ($email).\n$message');
                       final url =
                           'https://wa.me/${whatsappNumber.replaceAll('+', '')}?text=$text';
                       if (await canLaunchUrl(Uri.parse(url))) {
@@ -150,8 +177,13 @@ class ContactSection extends StatelessWidget {
                       }
                     }
                   },
-                  icon: const Icon(Icons.send),
-                  label: const Text('Send via WhatsApp'),
+                  icon: const Icon(Icons.email),
+                  label: Text('Send via WhatsApp',
+                      selectionColor: Colors.white,
+                      style: GoogleFonts.ysabeauInfant(
+                          color: const Color.fromARGB(249, 255, 255, 255),
+                          fontSize: isMobile ? 12 : 18,
+                          fontWeight: FontWeight.w300)),
                 ),
               ),
             ],
@@ -168,8 +200,7 @@ class ContactSection extends StatelessWidget {
           isMobile ? MainAxisAlignment.center : MainAxisAlignment.start,
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Icon(icon,
-            size: isMobile ? 28 : 32, color: Theme.of(context).primaryColor),
+        Icon(icon, size: isMobile ? 28 : 32, color: Colors.white),
         SizedBox(width: isMobile ? 10 : 20),
         Flexible(
           child: Column(
@@ -177,18 +208,19 @@ class ContactSection extends StatelessWidget {
             children: [
               Text(
                 title,
-                style: GoogleFonts.montserrat(
-                  fontSize: isMobile ? 18 : 20,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.blueGrey[800],
+                style: GoogleFonts.ysabeauInfant(
+                  fontSize: isMobile ? 18 : 25,
+                  fontWeight: FontWeight.w600,
+                  color: const Color.fromARGB(255, 255, 255, 255),
                 ),
               ),
               const SizedBox(height: 5),
               Text(
                 value,
-                style: GoogleFonts.openSans(
+                style: GoogleFonts.ysabeauInfant(
                   fontSize: isMobile ? 15 : 16,
-                  color: Colors.grey[700],
+                  fontWeight: FontWeight.w200,
+                  color: const Color.fromARGB(255, 255, 255, 255),
                 ),
                 softWrap: true,
               ),
@@ -203,8 +235,8 @@ class ContactSection extends StatelessWidget {
       BuildContext context, String label, IconData icon) {
     return InputDecoration(
       labelText: label,
-      hintStyle: GoogleFonts.openSans(color: Colors.grey[500]),
-      labelStyle: GoogleFonts.openSans(color: Colors.grey[700]),
+      hintStyle: GoogleFonts.ysabeauInfant(color: Colors.grey[500]),
+      labelStyle: GoogleFonts.ysabeauInfant(color: Colors.grey[700]),
       prefixIcon: Icon(icon, color: Theme.of(context).hintColor),
       border: OutlineInputBorder(
         borderRadius: BorderRadius.circular(8),

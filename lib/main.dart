@@ -12,21 +12,22 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Modern Architect Portfolio',
+      title: 'Kamalana Atelier',
       theme: ThemeData(
         // Refined color palette
         primarySwatch: Colors.blueGrey,
-        primaryColor: const Color(0xFF3F51B5), // A deep indigo blue
-        hintColor: const Color(0xFFFFC107), // A vibrant amber for accents
+        primaryColor: const Color(0xFF023131), // A deep indigo blue
+        hintColor:
+            const Color.fromARGB(255, 0, 0, 0), // A vibrant amber for accents
         scaffoldBackgroundColor:
-            const Color(0xFFF5F5F5), // Light grey background
+            const Color(0xFF023131), // Light grey background
 
         // Use Google Fonts or define a custom text theme
         textTheme: GoogleFonts.montserratTextTheme(
           // Example with Montserrat from Google Fonts
           Theme.of(context).textTheme.copyWith(
                 headlineLarge: TextStyle(
-                    color: Colors.blueGrey[900], fontWeight: FontWeight.bold),
+                    color: Color(0xFF023131), fontWeight: FontWeight.bold),
                 headlineMedium: TextStyle(
                     color: Colors.blueGrey[800], fontWeight: FontWeight.w600),
                 bodyLarge: TextStyle(color: Colors.grey[800]),
@@ -34,10 +35,10 @@ class MyApp extends StatelessWidget {
               ),
         ),
         appBarTheme: AppBarTheme(
-          backgroundColor: const Color(0xFF263238), // Dark Blue Grey
+          backgroundColor: const Color(0xFF023131), // Dark Blue Grey
           foregroundColor: Colors.white,
           elevation: 4,
-          titleTextStyle: GoogleFonts.montserrat(
+          titleTextStyle: GoogleFonts.ysabeau(
             fontSize: 24,
             fontWeight: FontWeight.bold,
             color: Colors.white,
@@ -45,20 +46,21 @@ class MyApp extends StatelessWidget {
         ),
         elevatedButtonTheme: ElevatedButtonThemeData(
           style: ElevatedButton.styleFrom(
-            backgroundColor: const Color(0xFF3F51B5), // Deep indigo
+            backgroundColor:
+                const Color.fromARGB(255, 2, 49, 49), // Deep indigo
             foregroundColor: Colors.white,
             padding: const EdgeInsets.symmetric(horizontal: 25, vertical: 15),
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(8),
             ),
-            textStyle: GoogleFonts.montserrat(
+            textStyle: GoogleFonts.ysabeau(
               fontSize: 18,
               fontWeight: FontWeight.w600,
             ),
           ),
         ),
         cardTheme: CardTheme(
-          elevation: 6,
+          elevation: 10,
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(12),
           ),

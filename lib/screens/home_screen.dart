@@ -4,9 +4,21 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:kamalana_web_app/widgets/about_me_section.dart';
 import 'package:kamalana_web_app/widgets/contact_section.dart';
-import 'package:kamalana_web_app/widgets/package_sectiion.dart';
+import 'package:kamalana_web_app/widgets/offering_section.dart';
 import 'package:kamalana_web_app/widgets/portfolio_section.dart'; // If using Google Fonts
 import 'package:url_launcher/url_launcher.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+
+class MyWidget extends StatelessWidget {
+  Widget build(BuildContext context) {
+    return IconButton(
+        // Use the FaIcon Widget + FontAwesomeIcons class for the IconData
+        icon: FaIcon(FontAwesomeIcons.gamepad),
+        onPressed: () {
+          print("Pressed");
+        });
+  }
+}
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -25,22 +37,27 @@ class _HomeScreenState extends State<HomeScreen>
   late AnimationController _heroAnimationController;
   late Animation<double> _heroTextOpacity;
   late Animation<Offset> _heroTextSlide;
+  late ScrollController _scrollController;
+  bool _scrolledPastAboutSection = false;
 
   @override
   void initState() {
     super.initState();
+
+    _scrollController = ScrollController()..addListener(_onScroll);
+
     _heroAnimationController = AnimationController(
       vsync: this,
-      duration: const Duration(seconds: 2),
+      duration: const Duration(seconds: 5),
     );
 
     _heroTextOpacity = Tween<double>(begin: 0.0, end: 1.0).animate(
       CurvedAnimation(
         parent: _heroAnimationController,
-        curve: const Interval(0.5, 1.0,
-            curve: Curves.easeIn), // Starts halfway through
+        curve: const Interval(0.5, 1.0, curve: Curves.easeInCubic),
       ),
     );
+
     _heroTextSlide =
         Tween<Offset>(begin: const Offset(0, 0.5), end: Offset.zero).animate(
       CurvedAnimation(
@@ -52,8 +69,27 @@ class _HomeScreenState extends State<HomeScreen>
     _heroAnimationController.forward();
   }
 
+  void _onScroll() {
+    if (_aboutMeKey.currentContext != null) {
+      final RenderBox box =
+          _aboutMeKey.currentContext!.findRenderObject() as RenderBox;
+      final position = box.localToGlobal(Offset.zero).dy;
+
+      if (position < 0 && !_scrolledPastAboutSection) {
+        setState(() {
+          _scrolledPastAboutSection = true;
+        });
+      } else if (position >= 0 && _scrolledPastAboutSection) {
+        setState(() {
+          _scrolledPastAboutSection = false;
+        });
+      }
+    }
+  }
+
   @override
   void dispose() {
+    _scrollController.dispose();
     _heroAnimationController.dispose();
     super.dispose();
   }
@@ -61,7 +97,7 @@ class _HomeScreenState extends State<HomeScreen>
   void _scrollToSection(GlobalKey key) {
     Scrollable.ensureVisible(
       key.currentContext!,
-      duration: const Duration(milliseconds: 700), // Smoother scroll
+      duration: const Duration(milliseconds: 600), // Smoother scroll
       curve: Curves.easeInOutQuad,
     );
   }
@@ -69,74 +105,78 @@ class _HomeScreenState extends State<HomeScreen>
   @override
   Widget build(BuildContext context) {
     final double screenWidth = MediaQuery.of(context).size.width;
-    final bool isMobile = screenWidth < 768;
-
+    final bool isMobile = screenWidth < 200;
     return Scaffold(
       floatingActionButton: FloatingActionButton(
-        backgroundColor: const Color(0xFF25D366),
+        backgroundColor: const Color.fromARGB(255, 51, 105, 70),
         onPressed: () {
-          final Uri whatsappUrl =
-              Uri.parse('https://wa.me/e'); // 62 is Indonesia country code
+          final Uri whatsappUrl = Uri.parse(
+              'https://wa.me/+6281912308055'); // 62 is Indonesia country code
           // ignore: deprecated_member_use
           launchUrl(whatsappUrl, mode: LaunchMode.externalApplication);
         },
-        child: Icon(Icons.phone, color: Colors.white, size: 32),
+        child: Icon(Icons.phone, color: Colors.white, size: 22),
       ),
       endDrawer: isMobile ? _buildDrawer(context) : null, // Drawer for mobile
       extendBodyBehindAppBar: true,
       appBar: PreferredSize(
-        preferredSize: Size.fromHeight(70),
+        preferredSize: const Size.fromHeight(90),
         child: ClipRRect(
-          // For rounded corners if needed
           child: BackdropFilter(
-            filter: ImageFilter.blur(sigmaX: 16, sigmaY: 16),
-            child: AppBar(
-              toolbarHeight: isMobile ? 80 : 120, // Responsive height
-              backgroundColor: Colors.black.withOpacity(0.25),
-              elevation: 0,
-              titleSpacing: 24,
-              title: Container(
-                margin: EdgeInsets.only(top: isMobile ? 8 : 16),
-                child: Image.asset(
-                  'assets/images/locfghnmgo.png',
-                  height: isMobile ? 80 : 100, // Responsive logo size
+            filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
+            child: AnimatedContainer(
+              duration: const Duration(milliseconds: 300),
+              color: _scrolledPastAboutSection
+                  ? const Color(0xFF023131) // Deep indigo color
+                  : Colors.transparent,
+              child: AppBar(
+                backgroundColor: const Color.fromARGB(0, 255, 255, 255),
+                elevation: 0,
+                toolbarHeight: isMobile ? 45 : 90,
+                titleSpacing: 250,
+                title: Container(
+                  margin: EdgeInsets.only(top: isMobile ? 20 : 20),
+                  child: Image.asset(
+                    'assets/images/logo.png',
+                    height: isMobile ? 70 : 110,
+                  ),
                 ),
+                actions: isMobile
+                    ? null
+                    : [
+                        _buildAppBarButton(
+                            '   ABOUT   ', () => _scrollToSection(_aboutMeKey)),
+                        _buildAppBarButton('   PORTFOLIO   ',
+                            () => _scrollToSection(_portfolioKey)),
+                        _buildAppBarButton('   OFFERING   ',
+                            () => _scrollToSection(_offeringKey)),
+                        _buildAppBarButton('   CONTACT   ',
+                            () => _scrollToSection(_contactKey)),
+                        const SizedBox(width: 300),
+                      ],
               ),
-              actions: isMobile
-                  ? null
-                  : [
-                      _buildAppBarButton(
-                          'About Me', () => _scrollToSection(_aboutMeKey)),
-                      _buildAppBarButton(
-                          'Portfolio', () => _scrollToSection(_portfolioKey)),
-                      _buildAppBarButton(
-                          'Offerings', () => _scrollToSection(_offeringKey)),
-                      _buildAppBarButton(
-                          'Contact', () => _scrollToSection(_contactKey)),
-                      const SizedBox(width: 24),
-                    ],
-              iconTheme: const IconThemeData(color: Colors.white),
-              automaticallyImplyLeading: isMobile,
             ),
           ),
         ),
       ),
+
       body: SingleChildScrollView(
+        controller: _scrollController,
         child: Column(
           children: [
-            // Hero Section
+            // Hero tetap di atas
             Container(
-              height: isMobile ? 300 : 500, // Responsive height
+              height: isMobile ? 600 : 1000,
               width: double.infinity,
-              decoration: const BoxDecoration(
+              decoration: BoxDecoration(
                 image: DecorationImage(
-                  image: AssetImage(
-                      'assets/images/tower.jpg'), // Use local asset image
+                  image: const AssetImage('assets/images/L.png'),
                   fit: BoxFit.cover,
+                  alignment: Alignment.bottomCenter,
                   colorFilter: ColorFilter.mode(
-                    Colors.black54,
+                    const Color.fromARGB(133, 0, 0, 0),
                     BlendMode.darken,
-                  ), // Darken for text readability
+                  ),
                 ),
               ),
               child: Center(
@@ -144,42 +184,52 @@ class _HomeScreenState extends State<HomeScreen>
                   position: _heroTextSlide,
                   child: FadeTransition(
                     opacity: _heroTextOpacity,
-                    child: Text(
-                      'Crafting Visions into Reality',
-                      style: GoogleFonts.montserrat(
-                        fontSize: isMobile ? 32 : 64,
-                        fontWeight: FontWeight.w800,
-                        color: Colors.white,
-                        letterSpacing: isMobile ? 1 : 2,
-                        shadows: [
-                          Shadow(
-                            blurRadius: 15.0,
-                            color: Colors.black.withOpacity(0.6),
-                            offset: const Offset(5.0, 5.0),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text(
+                          'Elegance Concealed in Every Contour',
+                          style: GoogleFonts.ysabeauInfant(
+                            fontSize: isMobile ? 30 : 75,
+                            fontWeight: FontWeight.w200,
+                            color: Colors.white,
                           ),
-                        ],
-                      ),
-                      textAlign: TextAlign.center,
+                          textAlign: TextAlign.center,
+                        ),
+                        Text(
+                          '• Kamalana Atelier •',
+                          style: GoogleFonts.ysabeauInfant(
+                            fontSize: 20,
+                            fontWeight: FontWeight.w200,
+                            color: Colors.white,
+                          ),
+                          textAlign: TextAlign.center,
+                        ),
+                      ],
                     ),
                   ),
                 ),
               ),
             ),
+
             AboutMeSection(key: _aboutMeKey),
             PortfolioSection(key: _portfolioKey),
-            OfferingsSection(
-                key: _offeringKey), // Assuming you have this widget
+            OfferingsSection(key: _offeringKey),
             ContactSection(key: _contactKey),
+
             // Footer
             Container(
               padding: EdgeInsets.symmetric(
-                  vertical: isMobile ? 20 : 30, horizontal: 20),
-              color: const Color(0xFF263238), // Dark Blue Grey
+                  vertical: isMobile ? 10 : 30, horizontal: 40),
+              color: const Color(0xFF023131),
+              // Dark Blue Grey
               child: Center(
                 child: Text(
-                  '© ${DateTime.now().year} Architect Studio. All rights reserved.',
-                  style: GoogleFonts.montserrat(
-                      color: Colors.white70, fontSize: isMobile ? 12 : 14),
+                  '© ${DateTime.now().year} Kamalana Atelier . All rights reserved.',
+                  style: GoogleFonts.ysabeau(
+                      color: const Color.fromARGB(255, 255, 255, 255),
+                      fontWeight: FontWeight.w200,
+                      fontSize: isMobile ? 12 : 16),
                 ),
               ),
             ),
@@ -194,9 +244,9 @@ class _HomeScreenState extends State<HomeScreen>
       onPressed: onPressed,
       style: TextButton.styleFrom(
         foregroundColor: Colors.white,
-        textStyle: GoogleFonts.montserrat(
-          fontSize: 16,
-          fontWeight: FontWeight.w500,
+        textStyle: GoogleFonts.ysabeau(
+          fontSize: 14,
+          fontWeight: FontWeight.w300,
         ),
       ),
       child: Text(text),
@@ -214,31 +264,29 @@ class _HomeScreenState extends State<HomeScreen>
             ),
             child: Text(
               'Navigation',
-              style: GoogleFonts.montserrat(
+              style: GoogleFonts.ysabeau(
                 color: Colors.white,
-                fontSize: 24,
+                fontSize: 30,
                 fontWeight: FontWeight.bold,
               ),
             ),
           ),
           ListTile(
-            title:
-                Text('About Me', style: GoogleFonts.montserrat(fontSize: 18)),
+            title: Text('About Us', style: GoogleFonts.ysabeau(fontSize: 30)),
             onTap: () {
               _scrollToSection(_aboutMeKey);
               Navigator.pop(context); // Close the drawer
             },
           ),
           ListTile(
-            title:
-                Text('Portfolio', style: GoogleFonts.montserrat(fontSize: 18)),
+            title: Text('Portfolio', style: GoogleFonts.ysabeau(fontSize: 30)),
             onTap: () {
               _scrollToSection(_portfolioKey);
-              Navigator.pop(context);
+              Navigator.pop(context); // Close the drawer
             },
           ),
           ListTile(
-            title: Text('Contact', style: GoogleFonts.montserrat(fontSize: 18)),
+            title: Text('Contact', style: GoogleFonts.ysabeau(fontSize: 30)),
             onTap: () {
               _scrollToSection(_contactKey);
               Navigator.pop(context);
