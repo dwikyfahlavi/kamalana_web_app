@@ -55,7 +55,7 @@ class PortfolioSection extends StatelessWidget {
     final bool isMobile = screenWidth < 1600;
     final double padding = isMobile ? 35 : 70;
     final double cardWidth = isMobile ? screenWidth * 0.7 : 380;
-
+    const SizedBox(height: 50);
     return Container(
       padding: EdgeInsets.all(padding),
       color: Colors.white,
@@ -65,7 +65,7 @@ class PortfolioSection extends StatelessWidget {
           Text(
             '     HIGHLIGHTS PROJECTS    ',
             style: GoogleFonts.ysabeauInfant(
-              fontSize: isMobile ? 20 : 40,
+              fontSize: isMobile ? 28 : 50,
               fontWeight: FontWeight.w600,
               color: Theme.of(context).primaryColor,
               letterSpacing: 3.0,
@@ -73,11 +73,11 @@ class PortfolioSection extends StatelessWidget {
           ),
           const SizedBox(height: 40),
           SizedBox(
-            height: isMobile ? 350 : 700,
+            height: isMobile ? 650 : 800,
             child: ListView.separated(
               scrollDirection: Axis.horizontal,
               itemCount: projects.length,
-              separatorBuilder: (_, __) => SizedBox(width: isMobile ? 20 : 20),
+              separatorBuilder: (_, __) => SizedBox(width: isMobile ? 10 : 20),
               itemBuilder: (context, index) {
                 return SizedBox(
                   width: cardWidth,
@@ -129,6 +129,10 @@ class _PortfolioCardState extends State<PortfolioCard>
 
   @override
   Widget build(BuildContext context) {
+    final double screenWidth = MediaQuery.of(context).size.width;
+    final bool isMobile = screenWidth < 1600;
+    final double padding = isMobile ? 35 : 70;
+    final double cardWidth = isMobile ? screenWidth * 0.7 : 380;
     final theme = Theme.of(context);
     return MouseRegion(
       onEnter: (_) => _controller.forward(),
@@ -195,7 +199,7 @@ class _PortfolioCardState extends State<PortfolioCard>
                       Text(
                         widget.project['title']!,
                         style: GoogleFonts.ysabeau(
-                          fontSize: 22,
+                          fontSize: isMobile ? 15 : 30,
                           fontWeight: FontWeight.w700,
                           color: theme.primaryColorDark,
                           letterSpacing: 0.5,
@@ -205,7 +209,7 @@ class _PortfolioCardState extends State<PortfolioCard>
                       Text(
                         widget.project['description']!,
                         style: GoogleFonts.ysabeau(
-                          fontSize: 15,
+                          fontSize: isMobile ? 10 : 15,
                           color: theme.brightness == Brightness.dark
                               ? Colors.grey[300]
                               : const Color.fromARGB(255, 0, 0, 0),
@@ -248,6 +252,11 @@ class _PortfolioCardState extends State<PortfolioCard>
     showDialog(
       context: context,
       builder: (context) {
+        final double screenWidth = MediaQuery.of(context).size.width;
+        final bool isMobile = screenWidth < 1600;
+        final double padding = isMobile ? 35 : 70;
+        final double cardWidth = isMobile ? screenWidth * 0.7 : 380;
+        final theme = Theme.of(context);
         return Dialog(
           backgroundColor: Colors.transparent,
           insetPadding: const EdgeInsets.all(32),
@@ -274,51 +283,14 @@ class _PortfolioCardState extends State<PortfolioCard>
                 ),
               ),
               // Description overlay
-              Positioned(
-                left: 0,
-                right: 0,
-                bottom: 0,
-                child: Container(
-                  // width: 900,
-                  padding: const EdgeInsets.all(28),
-                  decoration: BoxDecoration(
-                    color: Colors.black.withOpacity(0.7),
-                    borderRadius: const BorderRadius.vertical(
-                      bottom: Radius.circular(18),
-                    ),
-                  ),
-                  child: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        widget.project['title']!,
-                        style: GoogleFonts.ysabeau(
-                          color: Colors.white,
-                          fontSize: 40,
-                          fontWeight: FontWeight.w300,
-                        ),
-                      ),
-                      const SizedBox(height: 10),
-                      Text(
-                        widget.project['description']!,
-                        style: GoogleFonts.ysabeau(
-                            color: Colors.white70,
-                            fontWeight: FontWeight.w100,
-                            fontSize: 15,
-                            wordSpacing: 1.0),
-                      ),
-                    ],
-                  ),
-                ),
-              ),
+
               // Close button
               Positioned(
                 top: 16,
                 right: 20,
                 child: IconButton(
                   icon: const Icon(Icons.close,
-                      color: Color.fromARGB(255, 160, 160, 160), size: 28),
+                      color: Color.fromARGB(255, 160, 160, 160), size: 15),
                   onPressed: () => Navigator.of(context).pop(),
                 ),
               ),

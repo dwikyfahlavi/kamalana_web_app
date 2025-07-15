@@ -18,46 +18,47 @@ class AboutMeSection extends StatelessWidget {
           ? Column(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
+                const SizedBox(height: 60),
                 Text(
-                  'ME ?',
+                  'ABOUT US',
                   style: GoogleFonts.ysabeau(
-                    fontSize: isMobile ? 50 : 100,
-                    fontWeight: FontWeight.bold,
+                    fontSize: isMobile ? 30 : 100,
+                    fontWeight: FontWeight.w600,
                     color: Theme.of(context).primaryColor,
                   ),
                   textAlign: TextAlign.center,
                 ),
-                const SizedBox(height: 150),
+                const SizedBox(height: 60),
                 CircleAvatar(
                   radius: imageSize / 2,
                   backgroundImage: const NetworkImage(
-                      'https://images.unsplash.com/photo-1549068106-b024baf505f0?q=80&w=2787&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'), // Modern architect photo
+                      'assets/images/KAMALANA ATELIER LOGO (2).png'),
                   backgroundColor: Colors.grey[200],
                 ),
                 const SizedBox(height: 10),
                 Text(
-                  '[Your Architect Name]',
+                  'Kamalana Atelier',
                   style: GoogleFonts.ysabeau(
                     fontSize: 24,
-                    fontWeight: FontWeight.bold,
+                    fontWeight: FontWeight.w300,
                     color: const Color.fromARGB(255, 0, 0, 0),
                   ),
                   textAlign: TextAlign.center,
                 ),
                 Text(
-                  'Lead Architect',
+                  'Elegance Concealed in Every Contour',
                   style: GoogleFonts.ysabeau(
-                    fontSize: 16,
+                    fontSize: 10,
                     color: Colors.grey[600],
                   ),
                   textAlign: TextAlign.center,
                 ),
-                const SizedBox(height: 100),
+                const SizedBox(height: 50),
                 Text(
                   "Kamalana is more than a name — it's the soul of every space we create. A quiet beauty, a meaningful presence, a place to simply be. Kamalana is not just about architecture. We design with soul — from the spaces you live in, to the interiors that shape your days, to the landscapes that embrace them all. Kamalana offers comprehensive architectural consulting—covering exterior, interior, and landscape design. From residential homes, cafés, offices, and retail spaces to malls and hotels, we craft spaces that reflect identity, function, and beauty. Whether it’s a façade that makes a statement, interiors that inspire comfort, or landscapes that breathe life—we’re here to shape your vision into space.",
                   style: GoogleFonts.ysabeau(
-                    fontSize: isMobile ? 3 : 16,
-                    height: 0.8,
+                    fontSize: isMobile ? 12 : 16,
+                    height: isMobile ? 1.6 : 1.2,
                     color: Colors.grey[800],
                   ),
                   textAlign: TextAlign.center,

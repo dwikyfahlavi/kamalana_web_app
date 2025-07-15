@@ -17,6 +17,7 @@ class ContactSection extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
+          const SizedBox(height: 50),
           Text(
             '•   GET IN TOUCH  •',
             style: GoogleFonts.ysabeauInfant(
@@ -25,10 +26,10 @@ class ContactSection extends StatelessWidget {
               color: Colors.white,
             ),
           ),
-          const SizedBox(height: 120),
+          const SizedBox(height: 70),
           isMobile
               ? Column(
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  crossAxisAlignment: CrossAxisAlignment.center,
                   children: _buildContactContent(context, isMobile),
                 )
               : Row(
@@ -47,85 +48,92 @@ class ContactSection extends StatelessWidget {
     final messageController = TextEditingController();
 
     return [
-      Expanded(
-        flex: 2,
-        child: Column(
-          crossAxisAlignment:
-              isMobile ? CrossAxisAlignment.center : CrossAxisAlignment.start,
-          children: [
-            GestureDetector(
-              onTap: () async {
-                final Uri emailUri = Uri(
-                  scheme: 'mailto',
-                  path: 'kamalana.atelier@gmail.com',
-                );
-                if (await canLaunchUrl(emailUri)) {
-                  await launchUrl(emailUri,
-                      mode: LaunchMode.externalApplication);
-                }
-              },
-              child: _buildContactInfo(
-                context,
-                Icons.email_rounded,
-                'Email Us',
-                'kamalana.atelier@gmail.com',
-                isMobile,
+      Flexible(
+        flex: isMobile ? 0 : 2,
+        child: Padding(
+          padding: EdgeInsets.only(bottom: isMobile ? 30 : 0),
+          child: Column(
+            crossAxisAlignment:
+                isMobile ? CrossAxisAlignment.center : CrossAxisAlignment.start,
+            children: [
+              GestureDetector(
+                onTap: () async {
+                  final Uri emailUri = Uri(
+                    scheme: 'mailto',
+                    path: 'kamalana.atelier@gmail.com',
+                  );
+                  if (await canLaunchUrl(emailUri)) {
+                    await launchUrl(emailUri,
+                        mode: LaunchMode.externalApplication);
+                  }
+                },
+                child: _buildContactInfo(
+                  context,
+                  Icons.email_rounded,
+                  'Email Us',
+                  'kamalana.atelier@gmail.com',
+                  isMobile,
+                ),
               ),
-            ),
-            SizedBox(height: isMobile ? 20 : 30),
-            GestureDetector(
-              onTap: () async {
-                final Uri whatsappUrl = Uri.parse(
-                    'https://wa.me/+6281912308055'); // 62 is Indonesia country code
-                // ignore: deprecated_member_use
-                launchUrl(whatsappUrl, mode: LaunchMode.externalApplication);
-              },
-              child: _buildContactInfo(
-                context,
-                Icons.call_rounded,
-                'Call Us',
-                '+62 819 - 1230 - 8055',
-                isMobile,
+              SizedBox(height: isMobile ? 20 : 30),
+              GestureDetector(
+                onTap: () async {
+                  final Uri whatsappUrl = Uri.parse(
+                      'https://wa.me/+6281912308055'); // 62 is Indonesia country code
+                  // ignore: deprecated_member_use
+                  launchUrl(whatsappUrl, mode: LaunchMode.externalApplication);
+                },
+                child: _buildContactInfo(
+                  context,
+                  Icons.call_rounded,
+                  'Call Us',
+                  '+62 819 - 1230 - 8055',
+                  isMobile,
+                ),
               ),
-            ),
-            SizedBox(height: isMobile ? 20 : 30),
-            GestureDetector(
-              onTap: () async {
-                const url = 'https://instagram.com/kamalana.atelier';
-                if (await canLaunchUrl(Uri.parse(url))) {
-                  await launchUrl(Uri.parse(url),
-                      mode: LaunchMode.externalApplication);
-                }
-              },
-              child: _buildContactInfo(
-                context,
-                Icons.camera,
-                'Instagram',
-                'kamalana.atelier',
-                isMobile,
+              SizedBox(height: isMobile ? 20 : 30),
+              GestureDetector(
+                onTap: () async {
+                  const url = 'https://instagram.com/kamalana.atelier';
+                  if (await canLaunchUrl(Uri.parse(url))) {
+                    await launchUrl(Uri.parse(url),
+                        mode: LaunchMode.externalApplication);
+                  }
+                },
+                child: _buildContactInfo(
+                  context,
+                  Icons.camera,
+                  'Instagram',
+                  'kamalana.atelier',
+                  isMobile,
+                ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
-      SizedBox(width: isMobile ? 20 : 80, height: isMobile ? 60 : 20),
-      Expanded(
-        flex: 3,
+      SizedBox(
+        width: isMobile ? 0 : 80,
+        height: isMobile ? 40 : 0,
+      ),
+      Flexible(
+        flex: isMobile ? 0 : 3,
         child: Form(
           key: formKey,
           child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
+            crossAxisAlignment:
+                isMobile ? CrossAxisAlignment.center : CrossAxisAlignment.start,
             children: [
               Text(
                 'We’re Here to Listen:',
                 style: GoogleFonts.ysabeau(
-                  fontSize: isMobile ? 20 : 30,
+                  fontSize: isMobile ? 18 : 30,
                   fontWeight: FontWeight.w400,
-                  color: const Color.fromARGB(255, 255, 255, 255),
+                  color: Colors.white,
                 ),
                 textAlign: isMobile ? TextAlign.center : TextAlign.left,
               ),
-              SizedBox(height: isMobile ? 20 : 25),
+              SizedBox(height: isMobile ? 16 : 25),
               TextFormField(
                 controller: nameController,
                 decoration: _inputDecoration(

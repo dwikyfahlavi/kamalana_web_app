@@ -105,7 +105,10 @@ class _HomeScreenState extends State<HomeScreen>
   @override
   Widget build(BuildContext context) {
     final double screenWidth = MediaQuery.of(context).size.width;
-    final bool isMobile = screenWidth < 200;
+    final bool isMobile =
+        screenWidth < 500; // <600 cocok untuk iPhone & Android
+
+    ;
     return Scaffold(
       floatingActionButton: FloatingActionButton(
         backgroundColor: const Color.fromARGB(255, 51, 105, 70),
@@ -120,38 +123,41 @@ class _HomeScreenState extends State<HomeScreen>
       endDrawer: isMobile ? _buildDrawer(context) : null, // Drawer for mobile
       extendBodyBehindAppBar: true,
       appBar: PreferredSize(
-        preferredSize: const Size.fromHeight(90),
+        preferredSize:
+            isMobile ? const Size.fromHeight(40) : const Size.fromHeight(90),
         child: ClipRRect(
           child: BackdropFilter(
-            filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
+            filter: ImageFilter.blur(sigmaX: 0, sigmaY: 0),
             child: AnimatedContainer(
               duration: const Duration(milliseconds: 300),
-              color: _scrolledPastAboutSection
-                  ? const Color(0xFF023131) // Deep indigo color
-                  : Colors.transparent,
+              color: isMobile
+                  ? const Color.fromARGB(48, 2, 49, 49)
+                  : (_scrolledPastAboutSection
+                      ? const Color(0xFF023131)
+                      : Colors.transparent),
               child: AppBar(
-                backgroundColor: const Color.fromARGB(0, 255, 255, 255),
+                backgroundColor: Colors.transparent,
                 elevation: 0,
                 toolbarHeight: isMobile ? 45 : 90,
                 titleSpacing: 250,
                 title: Container(
-                  margin: EdgeInsets.only(top: isMobile ? 20 : 20),
+                  margin: EdgeInsets.only(top: isMobile ? 5 : 10),
                   child: Image.asset(
                     'assets/images/logo.png',
-                    height: isMobile ? 70 : 110,
+                    height: isMobile ? 28 : 110,
                   ),
                 ),
                 actions: isMobile
                     ? null
                     : [
                         _buildAppBarButton(
-                            '   ABOUT   ', () => _scrollToSection(_aboutMeKey)),
-                        _buildAppBarButton('   PORTFOLIO   ',
-                            () => _scrollToSection(_portfolioKey)),
-                        _buildAppBarButton('   OFFERING   ',
-                            () => _scrollToSection(_offeringKey)),
-                        _buildAppBarButton('   CONTACT   ',
-                            () => _scrollToSection(_contactKey)),
+                            'ABOUT', () => _scrollToSection(_aboutMeKey)),
+                        _buildAppBarButton(
+                            'PORTFOLIO', () => _scrollToSection(_portfolioKey)),
+                        _buildAppBarButton(
+                            'OFFERING', () => _scrollToSection(_offeringKey)),
+                        _buildAppBarButton(
+                            'CONTACT', () => _scrollToSection(_contactKey)),
                         const SizedBox(width: 300),
                       ],
               ),
@@ -166,7 +172,7 @@ class _HomeScreenState extends State<HomeScreen>
           children: [
             // Hero tetap di atas
             Container(
-              height: isMobile ? 600 : 1000,
+              height: isMobile ? MediaQuery.of(context).size.height * 1 : 1000,
               width: double.infinity,
               decoration: BoxDecoration(
                 image: DecorationImage(
@@ -190,7 +196,7 @@ class _HomeScreenState extends State<HomeScreen>
                         Text(
                           'Elegance Concealed in Every Contour',
                           style: GoogleFonts.ysabeauInfant(
-                            fontSize: isMobile ? 30 : 75,
+                            fontSize: isMobile ? 28 : 75, // ubah dari 30 ke 28
                             fontWeight: FontWeight.w200,
                             color: Colors.white,
                           ),
@@ -199,7 +205,9 @@ class _HomeScreenState extends State<HomeScreen>
                         Text(
                           '• Kamalana Atelier •',
                           style: GoogleFonts.ysabeauInfant(
-                            fontSize: 20,
+                            fontSize: isMobile
+                                ? 14
+                                : 20, // ubah agar pas di layar mobile
                             fontWeight: FontWeight.w200,
                             color: Colors.white,
                           ),
@@ -256,37 +264,55 @@ class _HomeScreenState extends State<HomeScreen>
   Widget _buildDrawer(BuildContext context) {
     return Drawer(
       child: ListView(
-        padding: EdgeInsets.zero,
+        padding: EdgeInsets.zero, // Remove default padding
         children: <Widget>[
           DrawerHeader(
-            decoration: BoxDecoration(
-              color: Theme.of(context).primaryColor,
+            decoration: const BoxDecoration(
+              gradient: LinearGradient(
+                begin: Alignment.topLeft,
+                end: Alignment.bottomRight,
+                colors: [
+                  Color(0xFF023131), // Warna utama Kamalana
+                  Color.fromARGB(255, 36, 65, 54), // Variasi tone lebih gelap
+                ],
+              ),
             ),
-            child: Text(
-              'Navigation',
-              style: GoogleFonts.ysabeau(
-                color: Colors.white,
-                fontSize: 30,
-                fontWeight: FontWeight.bold,
+            child: Align(
+              alignment: Alignment.bottomLeft,
+              child: Text(
+                'Kamalana Atelier',
+                style: GoogleFonts.ysabeau(
+                  color: Colors.white,
+                  fontSize: 26,
+                  fontWeight: FontWeight.w300,
+                  letterSpacing: 1.2,
+                ),
               ),
             ),
           ),
           ListTile(
-            title: Text('About Us', style: GoogleFonts.ysabeau(fontSize: 30)),
+            title: Text('About Us', style: GoogleFonts.ysabeau(fontSize: 14)),
             onTap: () {
               _scrollToSection(_aboutMeKey);
               Navigator.pop(context); // Close the drawer
             },
           ),
           ListTile(
-            title: Text('Portfolio', style: GoogleFonts.ysabeau(fontSize: 30)),
+            title: Text('Portfolio', style: GoogleFonts.ysabeau(fontSize: 14)),
             onTap: () {
               _scrollToSection(_portfolioKey);
               Navigator.pop(context); // Close the drawer
             },
           ),
           ListTile(
-            title: Text('Contact', style: GoogleFonts.ysabeau(fontSize: 30)),
+            title: Text('Offerings', style: GoogleFonts.ysabeau(fontSize: 14)),
+            onTap: () {
+              _scrollToSection(_offeringKey);
+              Navigator.pop(context); // Close the drawer
+            },
+          ),
+          ListTile(
+            title: Text('Contact', style: GoogleFonts.ysabeau(fontSize: 14)),
             onTap: () {
               _scrollToSection(_contactKey);
               Navigator.pop(context);
