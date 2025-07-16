@@ -36,16 +36,40 @@ class PortfolioSection extends StatelessWidget {
           'Makeupuccino was born and blossomed. Now, it nurtures a new space in the city of rain—a special place for the women of Bogor to celebrate their beauty, in softness and in meaning.'
     },
     {
+      'title': 'Lansdcape Kilang Pertamina',
+      'image': 'assets/images/LANDSCAPE PERTAMINA.png',
+      'description':
+          ' Following a consultation session with the client, the team proceeded with a preliminary design process—from concept development to layout planning. Inspired by the unique identity of Balikpapan—including its native fauna, cultural objects, and traditional patterns—the design aims to root the entire site in local character and contex'
+    },
+    {
       'title': 'Merakee Florist',
       'image': 'assets/images/merakee.png',
       'description':
           'Merakee Florist isn’t just a flower shop—it’s a space where love, joy, and milestones are celebrated. Now with a fresh new look, designed by Kamalana'
     },
     {
-      'title': 'Lansdcape Kilang Pertamina',
-      'image': 'assets/images/UTARA (1).png',
+      'title': 'Standard Room Hotel Garut',
+      'image': 'assets/images/INTERIOR S-TYPE HOTEL GARUT (3).png',
       'description':
-          'Merakee Florist isn’t just a flower shop—it’s a space where love, joy, and milestones are celebrated. Now with a fresh new look, designed by Kamalana'
+          'Soft pastel hues fill the room with light and warmth. Designed by Kamalana, this standard hotel room in Garut invites calmness and joy—elevated by subtle lighting on the ceiling and a refined backdrop, just as envisioned by the owner.'
+    },
+    {
+      'title': 'Executive Room Hotel Garut',
+      'image': 'assets/images/INTERIOR E-TYPE HOTEL GARUT (1).png',
+      'description':
+          'Kamalana brings the executive room to life with a vibrant tropical spirit, a touch of luxury, and understated elegance. Building on the character of the standard room, rich emerald accents now take the spotlight—infusing the space with tranquility, depth, and timeless sophistication.'
+    },
+    {
+      'title': 'Residences at Cihanjuang',
+      'image': 'assets/images/RESIDENCES AT CIHANJUANG.png',
+      'description':
+          'Kamalana was entrusted with the 3D Visualization Render project for a residential area in Cihanjuang. The scene is crafted to evoke warmth, comfort, and luxury—set in a serene morning atmosphere with soft dew and the vibrant bustle of residents starting their day.'
+    },
+    {
+      'title': 'Residences at Arcamanik',
+      'image': 'assets/images/RESIDENCES AT ARCAMANIK.png',
+      'description':
+          'Kamalana was given the opportunity to design a residential cluster in Arcamanik, Bandung—starting from master layout planning, façade design, material & color selection, to 3D visualization. With the owners brief for a Scandinavian concept, the homes were envisioned to reflect clean lines, natural warmth, and a quiet sense of elegance.'
     },
   ];
 
