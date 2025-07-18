@@ -7,18 +7,6 @@ import 'package:kamalana_web_app/widgets/contact_section.dart';
 import 'package:kamalana_web_app/widgets/offering_section.dart';
 import 'package:kamalana_web_app/widgets/portfolio_section.dart'; // If using Google Fonts
 import 'package:url_launcher/url_launcher.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-
-class MyWidget extends StatelessWidget {
-  Widget build(BuildContext context) {
-    return IconButton(
-        // Use the FaIcon Widget + FontAwesomeIcons class for the IconData
-        icon: FaIcon(FontAwesomeIcons.gamepad),
-        onPressed: () {
-          print("Pressed");
-        });
-  }
-}
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -108,7 +96,6 @@ class _HomeScreenState extends State<HomeScreen>
     final bool isMobile =
         screenWidth < 500; // <600 cocok untuk iPhone & Android
 
-    ;
     return Scaffold(
       floatingActionButton: FloatingActionButton(
         backgroundColor: const Color.fromARGB(255, 51, 105, 70),

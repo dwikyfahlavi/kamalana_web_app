@@ -3,13 +3,11 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class OfferingsSection extends StatelessWidget {
-  const OfferingsSection({Key? key}) : super(key: key);
+  const OfferingsSection({super.key});
   @override
   Widget build(BuildContext context) {
     final double screenWidth = MediaQuery.of(context).size.width;
     final bool isMobile = screenWidth < 1600;
-    final double padding = isMobile ? 35 : 70;
-    final double cardWidth = isMobile ? screenWidth * 0.7 : 380;
     const SizedBox(height: 00);
     return Container(
       color: Colors.white,
@@ -110,8 +108,6 @@ class _OfferingCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final double screenWidth = MediaQuery.of(context).size.width;
     final bool isMobile = screenWidth < 1600;
-    final double padding = isMobile ? 20 : 70;
-    final double cardWidth = isMobile ? screenWidth * 0.7 : 380;
     const SizedBox(height: 50);
     return Card(
       child: Container(

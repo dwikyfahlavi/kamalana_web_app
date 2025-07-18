@@ -13,7 +13,7 @@ class PortfolioSection extends StatelessWidget {
     },
     {
       'title': 'AwVilla',
-      'image': 'assets/images/AwVilla.png',
+      'image': 'assets/images/awvilla.png',
       'description':
           'Bathed in white serenity, this villa stands as a quiet poem of elegance. Inspired by classical American architecture, its graceful entrance and soft grandeur speak not in volume, but in presence. A garden blooms gently at its heart and whispers around its edges—inviting nature to dance with luxury, in stillness and in light.'
     },
@@ -45,7 +45,7 @@ class PortfolioSection extends StatelessWidget {
       'title': 'Merakee Florist',
       'image': 'assets/images/merakee.png',
       'description':
-          'Merakee Florist isn’t just a flower shop—it’s a space where love, joy, and milestones are celebrated. Now with a fresh new look, designed by Kamalana'
+          "Merakee Florist isn`t just a flower shop—it`s a space where love, joy, and milestones are celebrated. Now with a fresh new look, designed by Kamalana"
     },
     {
       'title': 'Standard Room Hotel Garut',
@@ -76,7 +76,7 @@ class PortfolioSection extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final double screenWidth = MediaQuery.of(context).size.width;
-    final bool isMobile = screenWidth < 1600;
+    final bool isMobile = screenWidth < 800;
     final double padding = isMobile ? 35 : 70;
     final double cardWidth = isMobile ? screenWidth * 0.7 : 380;
     const SizedBox(height: 50);
@@ -148,15 +148,10 @@ class _PortfolioCardState extends State<PortfolioCard>
     super.dispose();
   }
 
-  void _onTapDown(dynamic) => _controller.forward();
-  void _onTapUp(_) => _controller.reverse();
-
   @override
   Widget build(BuildContext context) {
     final double screenWidth = MediaQuery.of(context).size.width;
     final bool isMobile = screenWidth < 1600;
-    final double padding = isMobile ? 35 : 70;
-    final double cardWidth = isMobile ? screenWidth * 0.7 : 380;
     final theme = Theme.of(context);
     return MouseRegion(
       onEnter: (_) => _controller.forward(),
@@ -184,17 +179,9 @@ class _PortfolioCardState extends State<PortfolioCard>
                   children: [
                     AspectRatio(
                       aspectRatio: 3 / 4, // Portrait aspect ratio
-                      child: Image.network(
+                      child: Image.asset(
                         widget.project['image']!,
                         fit: BoxFit.cover,
-                        loadingBuilder: (context, child, progress) =>
-                            progress == null
-                                ? child
-                                : Container(
-                                    color: const Color.fromARGB(255, 0, 0, 0),
-                                    child: const Center(
-                                        child: CircularProgressIndicator()),
-                                  ),
                       ),
                     ),
                     Positioned(
@@ -276,11 +263,6 @@ class _PortfolioCardState extends State<PortfolioCard>
     showDialog(
       context: context,
       builder: (context) {
-        final double screenWidth = MediaQuery.of(context).size.width;
-        final bool isMobile = screenWidth < 1600;
-        final double padding = isMobile ? 35 : 70;
-        final double cardWidth = isMobile ? screenWidth * 0.7 : 380;
-        final theme = Theme.of(context);
         return Dialog(
           backgroundColor: Colors.transparent,
           insetPadding: const EdgeInsets.all(32),
